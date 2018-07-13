@@ -51,6 +51,7 @@ RUN runuser -l papercut -c "cd /installer/mobility-print && bash install" \
     && bash MUST-RUN-AS-ROOT
 
 RUN mkdir -p /var/log/supervisor
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 CMD ["/usr/bin/supervisord"]
 
