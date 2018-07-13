@@ -18,7 +18,6 @@ RUN apt-get update \
        curl \
        samba \
        wget \
-       supervisor \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -50,8 +49,8 @@ RUN runuser -l papercut -c "cd /installer/mobility-print && bash install" \
     && cd /papercut/pc-mobility-print \
     && bash MUST-RUN-AS-ROOT
 
-RUN mkdir -p /var/log/supervisor
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY run.sh /papercut/run.sh
+RUN chmod +x run.sh
 
-CMD ["/usr/bin/supervisord"]
 
+ENTRYPOINT ["/papercut/run.sh"]
