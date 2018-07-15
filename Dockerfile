@@ -18,6 +18,8 @@ RUN apt-get update \
        curl \
        samba \
        wget \
+       net-tools \
+       iptables \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -35,6 +37,7 @@ RUN runuser -l papercut -c "cd /installer/papercut && bash install" \
     && cd /papercut \
     && bash MUST-RUN-AS-ROOT
 
+ENV PC_MOBILITY_PRINT 1.0.1841
 RUN wget -O /installer/pc-mobility-print.sh $(curl https://www.papercut.com/products/ng/mobility-print/download/server/ | grep https | grep -v link_previous | cut -d"'" -f2 | grep -Ei "pc-mobility-print-[0-9\.]+\.sh" | awk '{sub(/^.*\?http=/, "", $1)}{sub(/\.sh.*?$/, ".sh", $1)}{print $1}' | sed -e's/%\([0-9A-F][0-9A-F]\)/\\\\\x\1/g' | xargs echo -e) \
     && chmod 755 /installer/pc-mobility-print.sh
 RUN mkdir /installer/mobility-print \
