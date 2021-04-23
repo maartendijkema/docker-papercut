@@ -24,7 +24,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /installer
-RUN wget -O /installer/pcng-setup.sh $(curl https://www.papercut.com/products/ng/upgrade/ | grep https | grep -v link_previous | cut -d'"' -f2 | grep -Ei "pcng-setup-[0-9\.]+-linux-x64\.sh" | awk '{sub(/^.*\?http=/, "", $1)}{sub(/\.sh.*?$/, ".sh", $1)}{print $1}' | sed -e's/%\([0-9A-F][0-9A-F]\)/\\\\\x\1/g' | xargs echo -e) \
+RUN wget -O /installer/pcng-setup.sh $(curl https://www.papercut.com/products/ng/upgrade/ | grep https | grep -v link_previous | cut -d'"' -f2 | grep -Ei "pcng-setup-[0-9\.]+\.sh" | awk '{sub(/^.*\?http=/, "", $1)}{sub(/\.sh.*?$/, ".sh", $1)}{print $1}' | sed -e's/%\([0-9A-F][0-9A-F]\)/\\\\\x\1/g' | xargs echo -e) \
     && chmod 755 /installer/pcng-setup.sh
 RUN cd /installer \
     && bash pcng-setup.sh -e \
